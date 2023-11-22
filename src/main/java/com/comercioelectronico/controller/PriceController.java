@@ -1,7 +1,7 @@
 package com.comercioelectronico.controller;
 
 import com.comercioelectronico.model.dto.PriceDTO;
-import com.comercioelectronico.repository.IPricesService;
+import com.comercioelectronico.repository.IPriceService;
 import com.comercioelectronico.utils.UtilsPrice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.time.format.DateTimeParseException;
 public class PriceController {
 
     @Autowired
-    private IPricesService service;
+    private IPriceService service;
 
     @GetMapping(value="price/{appDate}/{productId}/{brandId}")
     public PriceDTO getPrices(@PathVariable  String appDate,@PathVariable Long productId,@PathVariable Long brandId) {

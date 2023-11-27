@@ -50,12 +50,12 @@ Resultados correctos en los test.
 
 <h2>Comandos útiles</h2>
 
-**Maven**
+**Maven** </br>
 mvn spring-boot:run -Dspring-boot.run.profiles=local -Dfile.encoding=UTF-8 </br>
 mvn test </br>
 mvn install </br>
 
-**prompt**
+**Prompt** </br>
 curl http://localhost:8080/ecommerce/price/2020-06-14:10:00:00/35455/1 </br>
 curl http://localhost:8080/ecommerce/price/2020-06-14:16:00:00/35455/1 </br>
 curl http://localhost:8080/ecommerce/price/2020-06-14:21:00:00/35455/1 </br>

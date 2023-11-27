@@ -1,4 +1,4 @@
-package com.comercioelectronico.repository;
+package com.comercioelectronico.service;
 
 import com.comercioelectronico.model.dto.PriceDTO;
 import org.springframework.http.ResponseEntity;

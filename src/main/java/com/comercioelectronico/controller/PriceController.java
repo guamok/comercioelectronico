@@ -1,7 +1,7 @@
 package com.comercioelectronico.controller;
 
 import com.comercioelectronico.model.dto.PriceDTO;
-import com.comercioelectronico.repository.IPriceService;
+import com.comercioelectronico.service.IPriceService;
 import com.comercioelectronico.utils.UtilsPrice;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

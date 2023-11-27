@@ -1,9 +1,9 @@
-package com.comercioelectronico.service;
+package com.comercioelectronico.service.impl;
 
 import com.comercioelectronico.model.Price;
 import com.comercioelectronico.model.dto.PriceDTO;
-import com.comercioelectronico.repository.IPriceService;
 import com.comercioelectronico.repository.PriceRepository;
+import com.comercioelectronico.service.IPriceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

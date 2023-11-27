@@ -12,6 +12,6 @@ import java.util.List;
 
 public interface PriceRepository extends JpaRepository<Price, Long> {
 
-    @Query(value = "select id, curr, end_date, start_date, priority, :appData, product_id, brand_id, price_list, price from PRICES where BRAND_ID= :brand and product_id= :productId and :appData between start_date and end_date", nativeQuery = true)
-    List<Price> findNativeQueryPrices(@Param("appData") LocalDateTime appData, @Param("brand") long brand, @Param("productId") long productId);
+    @Query(value = "select id, curr, end_date, start_date, priority, product_id, brand_id, price_list, price from PRICES where BRAND_ID= :brandId and product_id= :productId and :appData between start_date and end_date", nativeQuery = true)
+    List<Price> findNativeQueryPrices(@Param("appData") LocalDateTime appData, @Param("brandId") long brandId, @Param("productId") long productId);
    }

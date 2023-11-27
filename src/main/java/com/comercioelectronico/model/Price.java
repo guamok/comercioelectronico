@@ -40,7 +40,7 @@ public class Price implements Serializable {
     private Integer priority;
 
     @Column(name="price")
-    private BigDecimal price;
+    private BigDecimal priceAmount;
 
     @Column(name="curr")
     private String curr;

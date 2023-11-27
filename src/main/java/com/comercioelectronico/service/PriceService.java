@@ -6,6 +6,8 @@ import com.comercioelectronico.repository.IPriceService;
 import com.comercioelectronico.repository.PriceRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,28 +21,19 @@ public class PriceService implements IPriceService {
     private PriceRepository priceRepository;
 
     @Override
-    public PriceDTO getPrices(LocalDateTime appDate, Long brandId, Long productId) {
-        List<Price> l = priceRepository.findNativeQueryPrices(appDate,  brandId ,productId);
-        //TODO: Put this in private function
-        Integer maxPriority = -1;
-        Integer priority;
-        int iMaxPriority =0;
-        for (int i = 0; i < l.size(); i++) {
-            PriceDTO price;
-            priority = l.get(i).getPriority();
-            if (priority > maxPriority){
-                log.info("priority= {}, maxpririty: {}",priority,maxPriority);
-                iMaxPriority = i;
-            }
+    public ResponseEntity<PriceDTO> getPrices(LocalDateTime appDate, Long brandId, Long productId) {
+        List<Price> lPrices = priceRepository.findNativeQueryPrices(appDate,  brandId ,productId);
+        if(lPrices.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return this.mapperPriceToDto(l.get(iMaxPriority),appDate);
+        return new ResponseEntity<> (this.mapperPriceToDto(lPrices.get(this.getIPriority(lPrices)),appDate), HttpStatus.OK);
     }
 
     /**
      * Mapper Price's entity to dto object Price
      *
-     * @param p
-     * @param appDate
+     * @param p Entity to mapper
+     * @param appDate app date
      * @return priceRet mapped dto from entity
      */
     private PriceDTO mapperPriceToDto(Price p, LocalDateTime appDate){
@@ -48,10 +41,30 @@ public class PriceService implements IPriceService {
         priceRet.setBrandId(p.getBrandId());
         priceRet.setProductId(p.getProductId());
         priceRet.setPriceList(p.getPriceList());
-        priceRet.setPrice(p.getPrice());
+        priceRet.setPrice(p.getPriceAmount());
         priceRet.setAppDate(appDate);
-        //TODO: Put this in private function
+
         return priceRet;
+    }
+
+    /**
+     * Get max priority from Prices
+     *
+     * @param l Price's List
+     * @return i  ind max of Prices list
+     */
+    private Integer getIPriority(List<Price> l){
+        Integer maxPriority = -1;
+        Integer priority;
+        int iMaxPriority =0;
+        for (int i = 0; i < l.size(); i++) {
+            priority = l.get(i).getPriority();
+            if (priority > maxPriority){
+                log.debug("priority= {}, maxpriority: {}",priority,maxPriority);
+                iMaxPriority = i;
+            }
+        }
+        return iMaxPriority;
     }
 
 }

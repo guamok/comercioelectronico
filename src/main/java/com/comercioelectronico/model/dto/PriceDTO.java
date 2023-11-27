@@ -17,12 +17,4 @@ public class PriceDTO {
     private Integer productId;
     private BigDecimal price;
 
-
-    public PriceDTO(Price price) {
-        this.brandId = price.getBrandId();
-        this.appDate= price.getStartDate();
-        this.priceList= price.getPriceList();
-        this.productId= price.getProductId();
-        this.price= price.getPrice();
-    }
 }

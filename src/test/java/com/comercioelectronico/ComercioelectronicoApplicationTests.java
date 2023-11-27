@@ -1,7 +1,6 @@
 package com.comercioelectronico;
 
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,25 +10,18 @@ import static org.hamcrest.Matchers.is;
 class ComercioelectronicoApplicationTests {
 
 	/**
-	 * Initializes
-	 */
-	@BeforeAll
-	static void setUp() {
-	}
-
-	/**
-	 * Test 1: petición a las 10:00 del día 14 del producto 35455   para la brand 1 (ZARA)
+	 * Test 1: petición a las 10:00 del día 14 del producto 35455 para la brand 1 (ZARA)
 	 * http://localhost:8080/ecommerce/price/2020-06-14:10:00:00/35455/1
 	 */
 	@Test
 	void getDay14_10ProductBrandAndAppDateOK() {
-
-		String response = "{\"brandId\":1,\"appDate\":\"2020-06-14T10:00:00\",\"priceList\":1,\"productId\":35455,\"price\":35.50}";
+		/** Price must be 35.50 */
+		String responseOK = "{\"brandId\":1,\"appDate\":\"2020-06-14T10:00:00\",\"priceList\":1,\"productId\":35455,\"price\":35.50}";
 		RestAssured.given()
 				.when()
 				.get("/ecommerce/price/2020-06-14:10:00:00/35455/1")
 				.then()
-				.statusCode(200).body(is(response));
+				.statusCode(200).body(is(responseOK));
 	}
 
 
@@ -39,13 +31,13 @@ class ComercioelectronicoApplicationTests {
 	 */
 	@Test
 	void getDay14_16ProductBrandAndAppDateOK() {
-
-		String response = "{\"brandId\":1,\"appDate\":\"2020-06-14T16:00:00\",\"priceList\":2,\"productId\":35455,\"price\":25.45}";
+		/** Price must be 25.45 */
+		String responseOK = "{\"brandId\":1,\"appDate\":\"2020-06-14T16:00:00\",\"priceList\":2,\"productId\":35455,\"price\":25.45}";
 		RestAssured.given()
 				.when()
 				.get("/ecommerce/price/2020-06-14:16:00:00/35455/1")
 				.then()
-				.statusCode(200).body(is(response));
+				.statusCode(200).body(is(responseOK));
 	}
 
 
@@ -55,13 +47,13 @@ class ComercioelectronicoApplicationTests {
 	 */
 	@Test
 	void getDay14_21ProductBrandAndAppDateOK() {
-
-		String response = "{\"brandId\":1,\"appDate\":\"2020-06-14T21:00:00\",\"priceList\":1,\"productId\":35455,\"price\":35.50}";
+		/** Price must be 35.50 */
+		String responseOK = "{\"brandId\":1,\"appDate\":\"2020-06-14T21:00:00\",\"priceList\":1,\"productId\":35455,\"price\":35.50}";
 		RestAssured.given()
 				.when()
 				.get("/ecommerce/price/2020-06-14:21:00:00/35455/1")
 				.then()
-				.statusCode(200).body(is(response));
+				.statusCode(200).body(is(responseOK));
 	}
 
 
@@ -70,15 +62,13 @@ class ComercioelectronicoApplicationTests {
 	 */
 	@Test
 	void getDay15ProductBrandAndAppDateOK() {
-
-		//http://localhost:8080/ecommerce/price/2020-06-15:10:00:00/35455/1
-
-		String response = "{\"brandId\":1,\"appDate\":\"2020-06-15T10:00:00\",\"priceList\":3,\"productId\":35455,\"price\":30.50}";
+		/** Price must be 30.50 */
+		String responseOK = "{\"brandId\":1,\"appDate\":\"2020-06-15T10:00:00\",\"priceList\":3,\"productId\":35455,\"price\":30.50}";
 		RestAssured.given()
 				.when()
 				.get("/ecommerce/price/2020-06-15:10:00:00/35455/1")
 				.then()
-				.statusCode(200).body(is(response));
+				.statusCode(200).body(is(responseOK));
 	}
 
 	/**
@@ -87,26 +77,40 @@ class ComercioelectronicoApplicationTests {
 	 */
 	@Test
 	void getDay16_21ProductBrandAndAppDateOK() {
-
-		String response = "{\"brandId\":1,\"appDate\":\"2020-06-16T21:00:00\",\"priceList\":4,\"productId\":35455,\"price\":38.95}";
+		/** Price must be 38.95 */
+		String responseOK = "{\"brandId\":1,\"appDate\":\"2020-06-16T21:00:00\",\"priceList\":4,\"productId\":35455,\"price\":38.95}";
 		RestAssured.given()
 				.when()
 				.get("/ecommerce/price/2020-06-16:21:00:00/35455/1")
 				.then()
-				.statusCode(200).body(is(response));
+				.statusCode(200).body(is(responseOK));
 	}
 
 	/**
-	 *  Wrong request.
+	 * Typed Wrong request. appDate(year wrong)
 	 * http://localhost:8080/ecommerce/price/2020-06-14:10:00:00/35455/1
 	 */
 	@Test
-	void getDay14_10ProductBrandAndAppDateNotOK() {
+	void getDay14_10_220ProductBrandAndAppDateNotOK() {
 
 		RestAssured.given()
 				.when()
-				.get("/ecommerce/price/2020-6-14:10:00:00/35455/1")
+				.get("/ecommerce/price/220-6-14:10:00:00/35455/1")
 				.then()
-				.statusCode(500);
+				.statusCode(404);
+	}
+
+	/**
+	 * Typed OK request, BUt , there isn't  price to 2027
+	 * http://localhost:8080/ecommerce/price/2020-06-14:10:00:00/35455/1
+	 */
+	@Test
+	void getDay14_10_2027ProductBrandAndAppDateOK() {
+
+		RestAssured.given()
+				.when()
+				.get("/ecommerce/price/2027-6-14:10:00:00/35455/1")
+				.then()
+				.statusCode(404);
 	}
 }

@@ -62,6 +62,6 @@ curl http://localhost:8080/ecommerce/price/2020-06-16:21:00:00/35455/1 </br>
 
 
 
-<h2>Pantallazos y logs del desarrollo</h2>
+<h2>Logs del desarrollo</h2>
 
-En el directorio  **./logs_local** se han metido varios logs e imágenes para poder ver detalles, versiones, etc.</br>
+En el directorio  **./logs_local** se han metido varios logs para poder ver detalles, versiones, etc.</br>

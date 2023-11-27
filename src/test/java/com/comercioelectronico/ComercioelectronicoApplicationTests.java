@@ -97,7 +97,7 @@ class ComercioelectronicoApplicationTests {
 				.when()
 				.get("/ecommerce/price/220-6-14:10:00:00/35455/1")
 				.then()
-				.statusCode(404);
+				.statusCode(422);
 	}
 
 	/**
@@ -109,7 +109,7 @@ class ComercioelectronicoApplicationTests {
 
 		RestAssured.given()
 				.when()
-				.get("/ecommerce/price/2027-6-14:10:00:00/35455/1")
+				.get("/ecommerce/price/2027-06-14:10:00:00/35455/1")
 				.then()
 				.statusCode(404);
 	}

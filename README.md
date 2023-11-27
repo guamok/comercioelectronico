@@ -50,16 +50,21 @@ Resultados correctos en los test.
 
 <h2>Comandos útiles</h2>
 
+**Maven**
 mvn spring-boot:run -Dspring-boot.run.profiles=local -Dfile.encoding=UTF-8 </br>
 mvn test </br>
 mvn install </br>
 
+**prompt**
 curl http://localhost:8080/ecommerce/price/2020-06-14:10:00:00/35455/1 </br>
 curl http://localhost:8080/ecommerce/price/2020-06-14:16:00:00/35455/1 </br>
 curl http://localhost:8080/ecommerce/price/2020-06-14:21:00:00/35455/1 </br>
 curl http://localhost:8080/ecommerce/price/2020-06-15:10:00:00/35455/1 </br>
 curl http://localhost:8080/ecommerce/price/2020-06-16:21:00:00/35455/1 </br>
 
+**Base de datos**: http://localhost:8080/h2-console/
+
+**Swagger**: http://localhost:8080/ecommerce.html
 
 
 <h2>Logs del desarrollo</h2>

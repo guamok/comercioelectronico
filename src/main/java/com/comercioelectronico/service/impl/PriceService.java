@@ -60,7 +60,9 @@ public class PriceService implements IPriceService {
         for (int i = 0; i < l.size(); i++) {
             priority = l.get(i).getPriority();
             if (priority > maxPriority){
-                log.debug("priority= {}, maxpriority: {}",priority,maxPriority);
+                if(log.isDebugEnabled()){
+                    log.debug("priority= {}, maxpriority: {}",priority,maxPriority);
+                }
                 iMaxPriority = i;
             }
         }

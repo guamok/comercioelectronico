@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
@@ -32,17 +33,17 @@ public class PriceController {
         try{
              appDateTime = UtilsPrice.parserLocalDate(appDate);
         }catch (DateTimeParseException dte){
-            log.error("The appDateTime is wrong typed from client's side.");
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.error("422 Error: The appDateTime is wrong typed from client's side.");
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "The appDateTime is wrong typed from client's side"  );
         }
 
         ResponseEntity<PriceDTO> priceDTO = service.getPrices(appDateTime,brandId,productId);
         if(log.isDebugEnabled()){
-            log.debug("StatusCode from service is= {} ",priceDTO.getStatusCode());
+            log.debug("StatusCode from service is= {}, body: {} ",priceDTO.getStatusCode(), priceDTO.getBody());
         }
         if(priceDTO.getStatusCode().is4xxClientError()){
-            log.error("StatusCode from service is= {}",priceDTO.getStatusCode());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            log.error("StatusCode from service is= {}, body: {} ",priceDTO.getStatusCode(), priceDTO.getBody());
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Not found"  );
         }
         return new ResponseEntity<> (priceDTO.getBody(), HttpStatus.OK);
     }
